@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="10dp">
+
+    <TextView android:id="@+id/txtBusinessName"
+        style="@style/TitleLine"
+        android:text="Hello"
+        />
+
+    <TextView android:id="@+id/txtStreet"
+        android:layout_below="@id/txtBusinessName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/AddressLine"
+        android:text="1122 Bucky Bucky Avenue"
+        />
+
+    <TextView android:id="@+id/txtDistance"
+        android:layout_below="@id/txtStreet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1.5"
+        />
+    <TextView android:id="@+id/txtDistancePost"
+        android:layout_toRightOf="@id/txtDistance"
+        android:layout_alignBaseline="@id/txtDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/miles_away"
+        android:layout_marginLeft="5dp"
+        />
+</RelativeLayout>
