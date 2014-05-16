@@ -8,15 +8,17 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.tekadept.coffeefinder.app.R;
 import com.tekadept.coffeefinder.Dtos.SearchListing;
+
+import java.util.List;
+import java.util.Map;
 
 public class ListingsAdapter extends ArrayAdapter<SearchListing> {
     Context context;
     int layoutResourceId;
-    SearchListing shops[] = null;
+    List shops = null;
 
-    public ListingsAdapter(Context context, int layoutResourceId, SearchListing[] shops){
+    public ListingsAdapter(Context context, int layoutResourceId, List shops){
         super(context, layoutResourceId, shops);
         this.context = context;
         this.layoutResourceId = layoutResourceId;
@@ -27,7 +29,7 @@ public class ListingsAdapter extends ArrayAdapter<SearchListing> {
         TextView txtBusinessName;
         TextView txtStreet;
         TextView txtDistance;
-        Number listingId;
+        long listingId;
     }
 
     @Override
@@ -48,11 +50,11 @@ public class ListingsAdapter extends ArrayAdapter<SearchListing> {
             holder = (ShopHolder)row.getTag();
         }
 
-        SearchListing shop = shops[position];
-        holder.txtBusinessName.setText(shop.getBusinessName());
-        holder.txtStreet.setText(shop.getStreet());
-        holder.txtDistance.setText(shop.getDistance().toString());
-        holder.listingId = shop.getListingId();
+        Map<String, Object> shop = (Map<String, Object>)shops.get(position);
+        holder.txtBusinessName.setText(shop.get("businessName").toString());
+        holder.txtStreet.setText(shop.get("street").toString());
+        holder.txtDistance.setText(shop.get("distance").toString());
+        holder.listingId =  Math.round(((Double)shop.get("listingId")));
         return row;
     }
 }

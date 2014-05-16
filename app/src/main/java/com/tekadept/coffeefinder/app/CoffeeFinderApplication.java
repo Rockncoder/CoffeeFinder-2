@@ -20,9 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-/**
- * Created by Troy on 5/15/14.
- */
 public class CoffeeFinderApplication extends Application  {
 
     public String currentLocation = "34.052234:-118.243685";

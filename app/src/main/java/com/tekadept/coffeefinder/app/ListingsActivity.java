@@ -93,15 +93,19 @@ public class ListingsActivity extends ActionBarActivity implements Observer, Lis
         Log.v(Constants.LOG_TAG, "Listings Update CALLED!!!");
 
         List listings = myApp.getList();
+
+        ListingsAdapter adapter = new ListingsAdapter(this, R.layout.shop_item_row, listings);
+        listView.setAdapter(adapter);
+
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        int id = ((ListingsAdapter.ShopHolder)view.getTag()).listingId.intValue();
-        Log.v(Constants.LOG_TAG, String.format("listing Id = %d", id));
+        ListingsAdapter.ShopHolder holder = (ListingsAdapter.ShopHolder)view.getTag();
+        Log.v(Constants.LOG_TAG, String.format("listing Id = %d", holder.listingId));
 
         Intent intent = new Intent(myActivity, DetailsActivity.class);
-        intent.putExtra(Constants.LISTING_ID, id);
+        intent.putExtra(Constants.LISTING_ID, holder.listingId);
         startActivity(intent);
     }
 }
