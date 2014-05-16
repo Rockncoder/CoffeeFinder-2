@@ -5,9 +5,9 @@ import android.app.Application;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.tekadept.coffeefinder.Dtos.MyObject;
-import com.tekadept.coffeefinder.Dtos.SearchListing;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -18,16 +18,15 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 
 public class CoffeeFinderApplication extends Application  {
 
-    public String currentLocation = "34.052234:-118.243685";
-    public String currentZipCode = "90023";
     public String currentSearchTerm = "coffee";
     public int currentRadius = 5;
     private List listings;
     private ObservablePool pool;
+//    private LatLng mLatLng = new LatLng(33.749464, -118.272114); // Downtown Los Angeles
+    private LatLng mLatLng = new LatLng(34.052234, -118.243685); // Middle of the Vincent Thomas Bridge
 
     @Override
     public void onCreate() {
@@ -49,7 +48,7 @@ public class CoffeeFinderApplication extends Application  {
          */
         @Override
         protected String doInBackground(String... notUsed) {
-            String url = String.format(YPSearchURL, currentLocation, currentSearchTerm, currentRadius);
+            String url = String.format(YPSearchURL, getLocationString(), currentSearchTerm, currentRadius);
             Log.v(Constants.LOG_TAG, "URL: " + url);
             String result = getStream(url);
             return result;
@@ -66,9 +65,12 @@ public class CoffeeFinderApplication extends Application  {
 
             // covert JSON string to a POJO
             MyObject myObj = jsonToMyObject(result);
-            listings = myObj.getSearchResult().getSearchListings().getSearchListing();
-
-            pool.finishedTask();
+            if(myObj != null) {
+                listings = myObj.getSearchResult().getSearchListings().getSearchListing();
+                pool.finishedTask();
+            } else {
+                Log.v(Constants.LOG_TAG, "No shops returned!!!");
+            }
         }
 
         /**
@@ -129,4 +131,14 @@ public class CoffeeFinderApplication extends Application  {
         return pool;
     }
 
+    public LatLng getLocation(){
+        return mLatLng;
+    }
+
+    public String getLocationString() {
+        String loc = String.format("%5.6f:%5.6f", mLatLng.latitude, mLatLng.longitude);
+        return loc;
+    }
 }
+
+

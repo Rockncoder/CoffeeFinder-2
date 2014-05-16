@@ -96,7 +96,6 @@ public class ListingsActivity extends ActionBarActivity implements Observer, Lis
 
         ListingsAdapter adapter = new ListingsAdapter(this, R.layout.shop_item_row, listings);
         listView.setAdapter(adapter);
-
     }
 
     @Override
