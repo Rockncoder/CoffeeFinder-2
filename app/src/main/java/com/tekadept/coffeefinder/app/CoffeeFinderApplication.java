@@ -45,7 +45,6 @@ public class CoffeeFinderApplication extends Application  implements
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.v(Constants.LOG_TAG, "In Application onCreate");
 
         pool = new ObservablePool();
 
@@ -79,12 +78,10 @@ public class CoffeeFinderApplication extends Application  implements
 
     @Override
     public void onConnected(Bundle bundle) {
-        Log.v(Constants.LOG_TAG, "onConnected");
 
         mCurrentLocation = mLocationClient.getLastLocation();
         if(mCurrentLocation != null) {
             String loc = String.format("Latitude = %5.6f, Longitude = %5.6f", mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
-            Log.v(Constants.LOG_TAG, loc);
             mLatLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
         }
         fetchLocations();
@@ -102,7 +99,6 @@ public class CoffeeFinderApplication extends Application  implements
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.v(Constants.LOG_TAG, "onConnectionFailed");
         fetchLocations();
     }
 
@@ -116,7 +112,6 @@ public class CoffeeFinderApplication extends Application  implements
         @Override
         protected String doInBackground(String... notUsed) {
             String url = String.format(YPSearchURL, getLocationString(), currentSearchTerm, currentRadius);
-            Log.v(Constants.LOG_TAG, "URL: " + url);
             String result = getStream(url);
             return result;
         }
@@ -128,7 +123,6 @@ public class CoffeeFinderApplication extends Application  implements
          */
         @Override
         protected void onPostExecute(String result) {
-            Log.v(Constants.LOG_TAG, result);
 
             // covert JSON string to a POJO
             MyObject myObj = jsonToMyObject(result);
@@ -136,7 +130,7 @@ public class CoffeeFinderApplication extends Application  implements
                 listings = myObj.getSearchResult().getSearchListings().getSearchListing();
                 pool.finishedTask();
             } else {
-                Log.v(Constants.LOG_TAG, "No shops returned!!!");
+                // No shops returned!!!
             }
         }
 
@@ -212,7 +206,6 @@ public class CoffeeFinderApplication extends Application  implements
         for (Object item : listings) {
             Map<String, Object> shop = (Map<String, Object>)item;
             int currentId = (int) Math.round(((Double)shop.get("listingId")));
-            Log.v(Constants.LOG_TAG, String.format("currentId = %d", currentId));
             if (currentId == listingId) {
                 return shop;
             }

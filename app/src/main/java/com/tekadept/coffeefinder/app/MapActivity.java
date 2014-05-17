@@ -75,14 +75,11 @@ public class MapActivity extends FragmentActivity implements Observer, GoogleMap
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_listings:
-                Log.v(Constants.LOG_TAG, "tapped Listings");
-
                 Intent i = new Intent(myActivity, ListingsActivity.class);
                 startActivity(i);
 
                 return true;
             case R.id.action_settings:
-                Log.v(Constants.LOG_TAG, "tapped Settings");
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -110,8 +107,6 @@ public class MapActivity extends FragmentActivity implements Observer, GoogleMap
 
     @Override
     public void update(Observable observable, Object o) {
-        Log.v(Constants.LOG_TAG, "Map Update CALLED!!!");
-
         List listings = myApp.getList();
 
         for (Object item : listings) {
@@ -130,7 +125,6 @@ public class MapActivity extends FragmentActivity implements Observer, GoogleMap
     public void onInfoWindowClick(Marker marker) {
         if (listingIds.containsKey(marker)) {
             int id = listingIds.get(marker);
-            Log.v(Constants.LOG_TAG, String.format("listing Id = %d", id));
 
             Intent intent = new Intent(myActivity, DetailsActivity.class);
             intent.putExtra(Constants.LISTING_ID, id);

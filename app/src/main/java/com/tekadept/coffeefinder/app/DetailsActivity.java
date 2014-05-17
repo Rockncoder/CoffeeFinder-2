@@ -59,9 +59,6 @@ public class DetailsActivity extends ActionBarActivity {
         }
 
         shop = myApp.getListingItem(listingId);
-
-        Log.v(Constants.LOG_TAG, String.format("%s Id = %d", shop.get("businessName"), listingId));
-
         businessName = (TextView)findViewById(R.id.businessName);
         address = (TextView)findViewById(R.id.address);
         city = (TextView)findViewById(R.id.city);

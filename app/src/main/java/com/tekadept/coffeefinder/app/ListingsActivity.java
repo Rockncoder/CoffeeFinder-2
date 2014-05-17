@@ -73,12 +73,10 @@ public class ListingsActivity extends ActionBarActivity implements Observer, Lis
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_map:
-                Log.v(Constants.LOG_TAG, "tapped Map");
                 intent = new Intent(myActivity, MapActivity.class);
                 startActivity(intent);
                 return true;
             case R.id.action_settings:
-                Log.v(Constants.LOG_TAG, "tapped Settings");
 //                intent = new Intent(myActivity, SettingsActivity.class);
 //                startActivity(intent);
                 return true;
@@ -89,8 +87,6 @@ public class ListingsActivity extends ActionBarActivity implements Observer, Lis
 
     @Override
     public void update(Observable observable, Object o) {
-        Log.v(Constants.LOG_TAG, "Listings Update CALLED!!!");
-
         List listings = myApp.getList();
 
         ListingsAdapter adapter = new ListingsAdapter(this, R.layout.shop_item_row, listings);
@@ -100,7 +96,6 @@ public class ListingsActivity extends ActionBarActivity implements Observer, Lis
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         ListingsAdapter.ShopHolder holder = (ListingsAdapter.ShopHolder)view.getTag();
-        Log.v(Constants.LOG_TAG, String.format("listing Id = %d", holder.listingId));
 
         Intent intent = new Intent(myActivity, DetailsActivity.class);
         intent.putExtra(Constants.LISTING_ID, (int) holder.listingId);
