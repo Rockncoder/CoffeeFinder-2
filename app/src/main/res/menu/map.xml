@@ -7,10 +7,6 @@
         android:title="Listings"
         android:orderInCategory="100"
         app:showAsAction="never" />
-    <item android:id="@+id/action_details"
-        android:title="@string/action_details"
-        android:orderInCategory="100"
-        app:showAsAction="never" />
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:orderInCategory="100"

@@ -18,14 +18,15 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-public class CoffeeFinderApplication extends Application  {
+public class CoffeeFinderApplication extends Application {
 
     public String currentSearchTerm = "coffee";
     public int currentRadius = 5;
     private List listings;
     private ObservablePool pool;
-//    private LatLng mLatLng = new LatLng(33.749464, -118.272114); // Downtown Los Angeles
+    //    private LatLng mLatLng = new LatLng(33.749464, -118.272114); // Downtown Los Angeles
     private LatLng mLatLng = new LatLng(34.052234, -118.243685); // Middle of the Vincent Thomas Bridge
 
     @Override
@@ -65,7 +66,7 @@ public class CoffeeFinderApplication extends Application  {
 
             // covert JSON string to a POJO
             MyObject myObj = jsonToMyObject(result);
-            if(myObj != null) {
+            if (myObj != null) {
                 listings = myObj.getSearchResult().getSearchListings().getSearchListing();
                 pool.finishedTask();
             } else {
@@ -131,13 +132,26 @@ public class CoffeeFinderApplication extends Application  {
         return pool;
     }
 
-    public LatLng getLocation(){
+    public LatLng getLocation() {
         return mLatLng;
     }
 
     public String getLocationString() {
         String loc = String.format("%5.6f:%5.6f", mLatLng.latitude, mLatLng.longitude);
         return loc;
+    }
+
+    public Map<String, Object>  getListingItem(int listingId) {
+
+        for (Object item : listings) {
+            Map<String, Object> shop = (Map<String, Object>)item;
+            int currentId = (int) Math.round(((Double)shop.get("listingId")));
+            Log.v(Constants.LOG_TAG, String.format("currentId = %d", currentId));
+            if (currentId == listingId) {
+                return shop;
+            }
+        }
+        return null;
     }
 }
 

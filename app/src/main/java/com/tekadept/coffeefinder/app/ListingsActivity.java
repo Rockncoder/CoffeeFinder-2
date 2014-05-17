@@ -22,7 +22,6 @@ public class ListingsActivity extends ActionBarActivity implements Observer, Lis
 
     private Activity myActivity;
     private CoffeeFinderApplication myApp;
-    private String source;
     private ListView listView;
 
     /**
@@ -104,7 +103,7 @@ public class ListingsActivity extends ActionBarActivity implements Observer, Lis
         Log.v(Constants.LOG_TAG, String.format("listing Id = %d", holder.listingId));
 
         Intent intent = new Intent(myActivity, DetailsActivity.class);
-        intent.putExtra(Constants.LISTING_ID, holder.listingId);
+        intent.putExtra(Constants.LISTING_ID, (int) holder.listingId);
         startActivity(intent);
     }
 }
